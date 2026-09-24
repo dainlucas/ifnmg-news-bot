@@ -1,0 +1,9 @@
+Generated with built-in image_gen.
+Reference: https://commons.wikimedia.org/wiki/File:Instituto_Federal_do_Norte_de_Minas_Gerais_-_Marca_Vertical_2015.svg
+
+Use case: logo-brand.
+Create one finished minimalist logo for "Notícias IF", a Telegram bot distributing IFNMG university news. Square 1024x1024 white background, flat vector-like graphic, exceptionally crisp edges, restrained professional Brazilian editorial identity. A single centered logo, no presentation board or mockup.
+Main icon: the recognizable Brazilian Federal Institute modular IF symbol, nine green squares and one red circle arranged on an exact regular grid with equal gutters. Four rows: row1 red circle, green square, green square; row2 green square, green square, empty; row3 green square, green square, green square; row4 green square, green square, empty. All squares identical with only minimally rounded corners. Circle same visual size. Green #2F9E41, red #CD191E.
+Place that intact IF symbol inside a very simple thin green rectangular speech balloon with softly rounded corners and one small lower-right tail, with plenty of clear space between frame and IF symbol. This creates the connection to news messages. Frame must not touch or reshape the IF symbol. Balanced compact proportions, rigorous alignment. Icon occupies roughly central 48% of canvas width, enough white margin for a circular Telegram avatar crop.
+Under icon, a single compact line of exact Portuguese text "Notícias IF", in a bold clean modern humanist sans serif, dark charcoal #202520, carefully kerned, comfortably readable. No other text.
+Aesthetic: simple authentic graphic designer mark, public education visual identity, very few shapes, two flat accent colors, strong silhouette. Avoid gradients, shadows, 3D, shiny surfaces, robots, brains, circuits, sparkles, swooshes, megaphones, newspapers, extra badges, ornamental detail, stock logo look, watermarks. Do not add "oficial" or official endorsement text.

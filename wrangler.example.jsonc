@@ -1,0 +1,36 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "noticias-ifnmg",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-24",
+  "compatibility_flags": [
+    "global_fetch_strictly_public"
+  ],
+  "workers_dev": true,
+  "preview_urls": false,
+  "triggers": {
+    "crons": [
+      "* * * * *"
+    ]
+  },
+  "vars": {
+    "APP_URL": "",
+    "JEV_MODEL": "jev-1.13.0",
+    "MATCH_THRESHOLD": "0.65"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "noticias-ifnmg",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "placement": {
+    "region": "aws:sa-east-1"
+  }
+}

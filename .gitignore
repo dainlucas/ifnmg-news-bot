@@ -1,0 +1,31 @@
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+.env
+.env.*
+!.env.example
+.wrangler/
+node_modules/
+dist/
+coverage/
+
+# Local deployment settings and provider credentials
+/wrangler.jsonc
+.npmrc
+.netrc
+credentials.json
+service-account*.json
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local databases, logs, backups and build caches
+*.sqlite*
+*.db
+*.db-*
+*.log
+*.bak
+*.dump
+*.tsbuildinfo
+.DS_Store
