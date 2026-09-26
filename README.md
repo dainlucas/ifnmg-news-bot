@@ -9,7 +9,6 @@ The bot's messages and commands are in Portuguese.
 ## Use Telegram
 
 Open [@noticiasIf_bot](https://t.me/noticiasIf_bot), send `/start`, and choose your categories.
-
 | Command | What it does |
 | --- | --- |
 | `/categorias` | Choose categories to follow |
@@ -25,7 +24,7 @@ Administrators must also subscribe to categories to receive news.
 
 ## Use Discord
 
-Start in `#boas-vindas` for a guide to the categories, channel notifications, and read-only news channels. The welcome guide links directly to all active category channels.
+Start in [Discord](https://discord.gg/87FjVS2KB) `#boas-vindas` for a guide to the categories, channel notifications, and read-only news channels. The welcome guide links directly to all active category channels.
 
 Use one Discord server for the community and one text channel per news category, for example `#bolsas`, `#pesquisa`, and `#eventos`. Create these channels in Discord, then run `/categorias` in each and select its category. The bot does not create channels automatically. Members choose what to follow with Discord’s own channel notification settings: mute unwanted channels and enable **All Messages** for the channels they want to follow. There are no personal category subscriptions on Discord.
 
