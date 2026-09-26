@@ -1,0 +1,24 @@
+{
+  "title": "🌿 Bem-vindo ao Notícias IFNMG!",
+  "description": "Aqui você acompanha publicações do site do IFNMG, organizadas por assunto. Escolha os canais que interessam a você e ajuste as notificações do seu jeito. Não precisa usar comandos nem se cadastrar no bot.",
+  "color": 2589503,
+  "fields": [
+    {
+      "name": "🔔 Como acompanhar",
+      "value": "**1.** Escolha os assuntos na lista abaixo.\n**2.** Nos canais que deseja acompanhar, abra **Configurações de notificações → Todas as mensagens**.\n**3.** Nos demais, escolha **Silenciar canal → Até eu reativar**.\n\nNo computador, clique com o botão direito no canal. No celular, toque e segure o nome do canal. Silencie apenas os canais indesejados; silenciar o servidor inteiro pode impedir os alertas que você quer receber."
+    },
+    {
+      "name": "🗂️ Encontre seus assuntos",
+      "value": "{{category_channels}}"
+    },
+    {
+      "name": "📰 Como funcionam as notícias",
+      "value": "As novas publicações chegam automaticamente, com título, resumo e link. Uma notícia pode aparecer em mais de um canal quando tratar de vários assuntos. Para conferir o conteúdo completo, prazos e detalhes, abra **Ler no IFNMG** no cartão da notícia."
+    },
+    {
+      "name": "📖 Um espaço para acompanhar",
+      "value": "Os canais são somente de leitura para membros: o bot publica as notícias e não há conversas nem respostas em tópicos. Você pode mudar suas notificações quando quiser.\n\n[Ajuda do Discord sobre notificações](https://support.discord.com/hc/pt-br/articles/215253258)"
+    }
+  ],
+  "footer": { "text": "Comece pelos assuntos que fazem parte da sua rotina." }
+}

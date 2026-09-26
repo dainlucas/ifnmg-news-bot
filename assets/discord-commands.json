@@ -1,0 +1,49 @@
+[
+  {
+    "name": "categorias",
+    "description": "Escolher uma categoria e restringir as mensagens deste canal ao bot",
+    "type": 1,
+    "default_member_permissions": "268435472",
+    "integration_types": [
+      0
+    ],
+    "contexts": [
+      0
+    ]
+  },
+  {
+    "name": "configuracao",
+    "description": "Consultar a categoria e a situação dos envios deste canal",
+    "type": 1,
+    "integration_types": [
+      0
+    ],
+    "contexts": [
+      0
+    ]
+  },
+  {
+    "name": "pausar",
+    "description": "Pausar os envios de notícias neste canal",
+    "type": 1,
+    "default_member_permissions": "16",
+    "integration_types": [
+      0
+    ],
+    "contexts": [
+      0
+    ]
+  },
+  {
+    "name": "retomar",
+    "description": "Retomar os envios deste canal somente para notícias novas",
+    "type": 1,
+    "default_member_permissions": "268435472",
+    "integration_types": [
+      0
+    ],
+    "contexts": [
+      0
+    ]
+  }
+]

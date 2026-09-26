@@ -1,7 +1,7 @@
 {
   "name": "noticias-ifnmg",
   "version": "1.0.0",
-  "description": "RSS do IFNMG com categorias JEV e inscri\u00e7\u00f5es no Telegram",
+  "description": "RSS do IFNMG com categorias JEV, Telegram e canais do Discord",
   "scripts": {
     "dev": "wrangler dev",
     "check": "tsc --noEmit",
@@ -9,7 +9,9 @@
     "deploy": "wrangler deploy",
     "db:local": "wrangler d1 migrations apply noticias-ifnmg --local",
     "db:remote": "wrangler d1 migrations apply noticias-ifnmg --remote",
-    "setup:telegram": "node scripts/telegram-setup.mjs"
+    "setup:telegram": "node scripts/telegram-setup.mjs",
+    "setup:discord": "node scripts/discord-setup.mjs",
+    "setup:discord:welcome": "node scripts/discord-welcome.mjs"
   },
   "keywords": [],
   "author": "",

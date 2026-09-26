@@ -3,3 +3,11 @@ TYPESAFE_API_KEY=
 TELEGRAM_ADMIN_ID=
 TELEGRAM_WEBHOOK_SECRET=
 TASK_SECRET=
+
+# Optional: leave both empty to keep only Telegram enabled.
+# Set vars.DISCORD_APPLICATION_ID as a string in wrangler.jsonc.
+DISCORD_PUBLIC_KEY=
+DISCORD_BOT_TOKEN=
+# Only for command registration in a test server; omit for global registration.
+# Copy IDs as strings; never convert Discord IDs to JavaScript numbers.
+DISCORD_TEST_GUILD_ID=

@@ -15,6 +15,7 @@
   },
   "vars": {
     "APP_URL": "",
+    "DISCORD_APPLICATION_ID": "",
     "JEV_MODEL": "jev-1.13.0",
     "MATCH_THRESHOLD": "0.65"
   },

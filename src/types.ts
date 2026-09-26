@@ -8,6 +8,9 @@ export interface Env {
   APP_URL: string;
   JEV_MODEL: string;
   MATCH_THRESHOLD: string;
+  DISCORD_BOT_TOKEN?: string;
+  DISCORD_PUBLIC_KEY?: string;
+  DISCORD_APPLICATION_ID?: string;
 }
 export interface Category {
   id: number; name: string; description: string; version: number; active: number;

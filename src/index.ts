@@ -1,13 +1,16 @@
 import { handleUpdate } from './bot';
 import { collect, classifyNext, deliver } from './pipeline';
 import { readLimited } from './feed';
+import { discordEndpoint } from './discord-interactions';
+import { deliverDiscord } from './discord-delivery';
 import { errorCode, statement as q, type Env } from './types';
 
 export default {
-  async fetch(request:Request,env:Env):Promise<Response> {
+  async fetch(request:Request,env:Env,ctx?:ExecutionContext):Promise<Response> {
     const url=new URL(request.url);
     if(request.method==='GET'&&url.pathname==='/health') return Response.json({service:'noticias-ifnmg',ok:true});
     try {
+      if(url.pathname==='/discord/interactions'&&request.method==='POST') return await discordEndpoint(request,env,ctx);
       if(url.pathname==='/webhook'&&request.method==='POST') {
         if(!env.TELEGRAM_WEBHOOK_SECRET||request.headers.get('X-Telegram-Bot-Api-Secret-Token')!==env.TELEGRAM_WEBHOOK_SECRET) return new Response('Unauthorized',{status:401});
         const payload=JSON.parse(await readLimited(new Response(request.body),64_000));
@@ -23,6 +26,7 @@ export default {
         }
         if(url.pathname==='/internal/classify') return Response.json(await classifyNext(env));
         if(url.pathname==='/internal/deliver') return Response.json(await deliver(env));
+        if(url.pathname==='/internal/deliver-discord') return Response.json(await deliverDiscord(env));
         if(url.pathname==='/internal/status') {
           const sources=await env.DB.prepare('SELECT id,name,initialized_at,last_success,last_error FROM sources').all();
           const categories=await env.DB.prepare('SELECT id,name,active FROM categories').all();
@@ -30,7 +34,14 @@ export default {
             (SELECT COUNT(*) FROM users) users,(SELECT COUNT(*) FROM articles) articles,
             (SELECT COUNT(*) FROM deliveries WHERE status='sent') sent,
             (SELECT COUNT(*) FROM deliveries WHERE status IN ('pending','sending')) pending`).first();
-          return Response.json({sources:sources.results,categories:categories.results,stats});
+          const discord=await env.DB.prepare(`SELECT
+            (SELECT COUNT(*) FROM discord_channels) channels,
+            (SELECT COUNT(*) FROM discord_channels WHERE blocked=1) blocked,
+            (SELECT COUNT(*) FROM discord_deliveries WHERE status='sent') sent,
+            (SELECT COUNT(*) FROM discord_deliveries WHERE status IN ('pending','sending')) pending,
+            (SELECT COUNT(*) FROM discord_deliveries WHERE status='failed') failed,
+            (SELECT last_error FROM discord_dispatch WHERE id=1) last_error`).first();
+          return Response.json({sources:sources.results,categories:categories.results,stats,discord});
         }
         if(url.pathname==='/internal/dispatch') {
           const source=Number(url.searchParams.get('source'));
@@ -51,6 +62,7 @@ export default {
     if(!env.APP_URL) return;
     const slot=Math.floor(event.scheduledTime/60_000)%10;
     const paths=['/internal/classify','/internal/deliver'];
+    if(env.DISCORD_BOT_TOKEN) paths.push('/internal/deliver-discord');
     if(slot<6) paths.push(`/internal/collect?source=${slot+1}`);
     // Independent HTTP invocations give each stage its own CPU/subrequest budget.
     ctx.waitUntil(Promise.all(paths.map(async path=>{
@@ -62,6 +74,10 @@ export default {
     })));
     if(Math.floor(event.scheduledTime/60_000)%1440===0) {
       ctx.waitUntil(q(env.DB,'DELETE FROM bot_updates WHERE created_at<? AND status=\'done\'',event.scheduledTime-7*86400_000).run());
+      ctx.waitUntil(env.DB.batch([
+        q(env.DB,'DELETE FROM discord_interactions WHERE created_at<?',event.scheduledTime-7*86400_000),
+        q(env.DB,'DELETE FROM discord_menus WHERE expires_at<?',event.scheduledTime),
+      ]));
     }
   },
 } satisfies ExportedHandler<Env>;

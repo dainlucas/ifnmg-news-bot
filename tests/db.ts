@@ -1,10 +1,12 @@
 import { DatabaseSync } from 'node:sqlite';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 
-export function testDatabase() {
+export function testDatabase(through = '9999') {
   const sql=new DatabaseSync(':memory:');
-  sql.exec(readFileSync(new URL('../migrations/0001_initial.sql',import.meta.url),'utf8'));
-  sql.exec(readFileSync(new URL('../migrations/0002_feed_hash.sql',import.meta.url),'utf8'));
+  const migrations = new URL('../migrations/', import.meta.url);
+  for (const file of readdirSync(migrations).filter(f => f.endsWith('.sql') && f.slice(0,4) <= through).sort()) {
+    sql.exec(readFileSync(new URL(file, migrations), 'utf8'));
+  }
   class Statement {
     constructor(public text:string,public params:any[]=[]) {}
     bind(...params:any[]) { return new Statement(this.text,params); }

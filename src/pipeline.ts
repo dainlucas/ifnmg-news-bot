@@ -82,6 +82,13 @@ export async function classifyNext(env: Env) {
       SELECT DISTINCT m.article_id,s.user_id FROM matches m JOIN subscriptions s ON s.category_id=m.category_id
       JOIN categories c ON c.id=m.category_id JOIN users u ON u.id=s.user_id
       WHERE m.article_id=? AND m.selected=1 AND c.active=1 AND u.active=1 AND u.blocked=0 AND s.created_at<=?`,article.id,article.captured_at));
+    // Fan out the same persisted JEV result; never classify separately per platform.
+    jobs.push(q(env.DB,`INSERT OR IGNORE INTO discord_deliveries(article_id,channel_id)
+      SELECT DISTINCT m.article_id,s.channel_id FROM matches m
+      JOIN discord_subscriptions s ON s.category_id=m.category_id
+      JOIN categories c ON c.id=m.category_id JOIN discord_channels d ON d.id=s.channel_id
+      WHERE m.article_id=? AND m.selected=1 AND c.active=1 AND d.active=1 AND d.blocked=0
+      AND s.created_at<=?`,article.id,article.captured_at));
     jobs.push(q(env.DB,`UPDATE articles SET status='classified',lease_until=0,last_error=NULL,model=?,input_tokens=?
       WHERE id=? AND lease_token=?`,result?.model??null,result?.inputTokens??0,article.id,token));
     await env.DB.batch(jobs);
