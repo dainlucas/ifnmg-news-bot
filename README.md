@@ -8,7 +8,48 @@ The bot's messages and commands are in Portuguese.
 
 ## Architecture
 
-![IFNMG News Bot system architecture](assets/system-architecture.png)
+```mermaid
+flowchart LR
+    subgraph SOURCES["Sources and people"]
+        RSS["IFNMG RSS feeds"]
+        PEOPLE["Administrators and users"]
+    end
+
+    subgraph CLOUDFLARE["Cloudflare"]
+        CRON["Cron Triggers"]
+        WORKER["Worker<br/>collection, commands,<br/>classification, and delivery"]
+        D1[("D1<br/>configuration, categories,<br/>posts, queues, and history")]
+    end
+
+    JEV["JEV API"]
+    TELEGRAM["Telegram API"]
+    DISCORD["Discord API"]
+    TOPICS["Private chats<br/>and group topics"]
+    CHANNELS["Server channels"]
+
+    CRON -->|"schedules executions"| WORKER
+
+    WORKER -->|"polls"| RSS
+    RSS -->|"posts"| WORKER
+
+    WORKER -->|"requests classification"| JEV
+    JEV -->|"detected categories"| WORKER
+
+    WORKER -->|"writes state, queues, and deliveries"| D1
+    D1 -->|"returns configuration and pending work"| WORKER
+
+    PEOPLE -->|"commands"| TELEGRAM
+    PEOPLE -->|"commands"| DISCORD
+
+    TELEGRAM -->|"webhook"| WORKER
+    DISCORD -->|"HTTP interactions"| WORKER
+
+    WORKER -->|"responses and messages"| TELEGRAM
+    WORKER -->|"responses and messages"| DISCORD
+
+    TELEGRAM -->|"publishes"| TOPICS
+    DISCORD -->|"publishes"| CHANNELS
+```
 
 ## Use Telegram
 

@@ -8,7 +8,48 @@ As mensagens e os comandos do bot estão em português.
 
 ## Arquitetura
 
-![Arquitetura do sistema do Bot de Notícias do IFNMG](assets/system-architecture.png)
+```mermaid
+flowchart LR
+    subgraph ORIGENS["Fontes e pessoas"]
+        RSS["Feeds RSS do IFNMG"]
+        PESSOAS["Administradores e usuários"]
+    end
+
+    subgraph CLOUDFLARE["Cloudflare"]
+        CRON["Cron Triggers"]
+        WORKER["Worker<br/>coleta, comandos,<br/>classificação e entregas"]
+        D1[("D1<br/>configurações, categorias,<br/>notícias, filas e histórico")]
+    end
+
+    JEV["API JEV"]
+    TELEGRAM["API do Telegram"]
+    DISCORD["API do Discord"]
+    TOPICOS["Conversas privadas<br/>e tópicos do grupo"]
+    CANAIS["Canais do servidor"]
+
+    CRON -->|"agenda execuções"| WORKER
+
+    WORKER -->|"consulta"| RSS
+    RSS -->|"publicações"| WORKER
+
+    WORKER -->|"solicita classificação"| JEV
+    JEV -->|"categorias detectadas"| WORKER
+
+    WORKER -->|"grava estado, filas e entregas"| D1
+    D1 -->|"retorna configurações e pendências"| WORKER
+
+    PESSOAS -->|"comandos"| TELEGRAM
+    PESSOAS -->|"comandos"| DISCORD
+
+    TELEGRAM -->|"webhook"| WORKER
+    DISCORD -->|"interações HTTP"| WORKER
+
+    WORKER -->|"respostas e mensagens"| TELEGRAM
+    WORKER -->|"respostas e mensagens"| DISCORD
+
+    TELEGRAM -->|"publica"| TOPICOS
+    DISCORD -->|"publica"| CANAIS
+```
 
 ## Usar o Telegram
 
