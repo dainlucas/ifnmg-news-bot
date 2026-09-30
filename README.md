@@ -6,6 +6,10 @@ A news bot that follows six IFNMG RSS feeds and delivers news to Telegram subscr
 
 The bot's messages and commands are in Portuguese.
 
+## Architecture
+
+![IFNMG News Bot system architecture](assets/system-architecture.png)
+
 ## Use Telegram
 
 Open [@noticiasIf_bot](https://t.me/noticiasIf_bot), send `/start`, and choose your categories.

@@ -6,6 +6,10 @@ Um bot que acompanha seis feeds RSS do IFNMG e envia notícias para assinantes n
 
 As mensagens e os comandos do bot estão em português.
 
+## Arquitetura
+
+![Arquitetura do sistema do Bot de Notícias do IFNMG](assets/system-architecture.png)
+
 ## Usar o Telegram
 
 Abra [@noticiasIf_bot](https://t.me/noticiasIf_bot), envie `/start` e escolha suas categorias.
